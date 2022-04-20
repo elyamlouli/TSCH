@@ -20,6 +20,5 @@ do
     do 
         ./compile.sh $seed $delai
         cp ./sender.iotlab $dir/sender-$delai-$seed.iotlab
-        cp ./coordinator.iotlab $dir/coordinator-$delai-$seed.iotlab
     done
 done
