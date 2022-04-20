@@ -69,13 +69,6 @@ for cle,val in P.items():
             if v[2] != "":
                 val[0]+=1
 
-print(P)
-
-
-
-
-
-
 
 fig = plt.figure()
 ax = fig.add_subplot(projection='3d')
