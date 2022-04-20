@@ -26,14 +26,16 @@ def parse (fichier):
     
     return dico
 
-dico = parse("square-10-1.txt")
-print(dico)
+dico = parse("square-5-1.txt")
 L = list()
 for cle,val in dico.items():
     if val[2] != "":
         i = val[2]-val[0]
         L.append(i)
 L.sort()
+l = len(L)
+L = L[0:l-int(l*0.005)]
+print(L)
 m = np.average(L)
 variance = np.var(L)
 print("moyenne = ", m,"variance = ", variance)
@@ -43,10 +45,10 @@ range = np.linspace(L[0], L[n-1], int(math.sqrt(n))+1)
 plt.style.use('ggplot')
 plt.hist(L, bins=range)
 plt.title("Histogramme des délais des messages reçus")
-plt.xlabel('Délais (s)')
+plt.xlabel('Délai (s)')
 plt.ylabel("Nombre d'occurrences")
 plt.show()
-plt.savefig("occ-10-1.png")
+plt.savefig("occ-5-1.png")
 
 
 

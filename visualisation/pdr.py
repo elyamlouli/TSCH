@@ -25,7 +25,7 @@ def parse (fichier):
     
     return dico
 
-dico = parse("square-10-1.txt")
+dico = parse("square-3-1.txt")
 D = {
     "m3-5" :[4.00,8.00,1.20],
     "m3-6" :[4.00,8.00,2.10],
@@ -97,9 +97,6 @@ for cle, val in D.items():
 
 
 
-# For each set of style and range settings, plot n random points in the box
-# defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].
-# for m, zlow, zhigh in [('o', -50, -25), ('^', -30, -5)]:
 
 scatter_plot=ax.scatter(X, Y, Z, c=c, cmap = color_map, s=100)
 plt.colorbar(scatter_plot)
@@ -107,6 +104,6 @@ ax.set_xlabel('X ')
 ax.set_ylabel('Y ')
 ax.set_zlabel('Z ')
 plt.title("Delivery ratio")
-plt.savefig("pdr-10-1.png")
+plt.savefig("pdr-3-1.png")
 
 plt.show()
