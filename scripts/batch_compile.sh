@@ -19,7 +19,7 @@ do
     for delai in $(seq $delai_start $delai_end)
     do 
         ./compile.sh $seed $delai
-        cp ./sender.iotlab $dir/sender-$seed-$delai.iotlab
-        cp ./coordinator.iotlab $dir/coordinator-$seed-$delai.iotlab
+        cp ./sender.iotlab $dir/sender-$delai-$seed.iotlab
+        cp ./coordinator.iotlab $dir/coordinator-$delai-$seed.iotlab
     done
 done
