@@ -1,4 +1,4 @@
-CONTIKI_PROJECT = coordinator sender node
+CONTIKI_PROJECT = coordinator sender node simple-sender
 all: $(CONTIKI_PROJECT)
 
 CONTIKI = ../../iot-lab/parts/iot-lab-contiki-ng/contiki-ng

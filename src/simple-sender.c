@@ -1,3 +1,4 @@
+
 #include "contiki.h"
 
 #include "sys/log.h"
@@ -8,16 +9,11 @@
 #include "net/ipv6/uip-ds6-nbr.h"
 #include "net/linkaddr.h"
 
-#include "lib/random.h"
 #include <stdio.h>
 
 #include "net/net-debug.h"
 
 #include "./define.h"
-
-#ifndef SEED
-#define SEED 0
-#endif
 
 #ifndef DELAI
 #define DELAI 10 * CLOCK_SECOND
@@ -65,10 +61,10 @@ PROCESS_THREAD(sender_process, ev, data)
     static struct etimer periodic_timer;
     static struct etimer delai_timer;
     static char mac_addr[2*LINKADDR_SIZE+1];
+    uip_ipaddr_t dest_ipaddr;
 
     PROCESS_BEGIN();
     NETSTACK_MAC.on();
-    random_init(SEED);
     simple_udp_register(&udp_conn, UDP_CLIENT_PORT, NULL, UDP_SERVER_PORT, udp_rx_callback);
     write_linkaddr_node_addr(mac_addr); 
 
@@ -80,18 +76,10 @@ PROCESS_THREAD(sender_process, ev, data)
     while(1) {
         PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
 
-        if(NETSTACK_ROUTING.node_is_reachable()) {
-            int i;
-            int nb_nodes = uip_ds6_nbr_num();
-            unsigned short rand_nb = random_rand() % nb_nodes; 
-            uip_ds6_nbr_t * dest = uip_ds6_nbr_head();
-            for(i = 1; i < rand_nb; ++i) {
-                dest = uip_ds6_nbr_next(dest); 
-            }
+        if(NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_ipaddr)) {
             snprintf(buf, SIZE, "%s-%d", mac_addr, count);
-            simple_udp_sendto(&udp_conn, buf, SIZE, &(dest->ipaddr));
+            simple_udp_sendto(&udp_conn, buf, SIZE, &dest_ipaddr);
             count++;
-
             printf("TX %s-%d\n", mac_addr, count);
         } else {
             printf("ERR Not reachable\n");
